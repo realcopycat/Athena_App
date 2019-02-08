@@ -7,13 +7,14 @@ from flask import render_template
 from athena_App import app
 from athena_App.formClass import QuestionForm
 
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['POST','GET'])
+@app.route('/home', methods=['POST','GET'])
 def home():
     """Renders the home page."""
     question = ''
     form = QuestionForm()
     question = form.question.data
+
     return render_template(
         'index.html',
         title = 'Home Page',
