@@ -41,6 +41,7 @@
     <Folder Include="athena_App\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="athena_App\templates\answer.html" />
     <Content Include="requirements.txt" />
     <Content Include="athena_App\static\content\bootstrap.css" />
     <Content Include="athena_App\static\content\bootstrap.min.css" />
