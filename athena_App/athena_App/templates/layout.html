@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Flask Application</title>
+    <title>{{ title }} - Q&A system</title>
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
@@ -23,8 +23,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('home') }}">开始提问</a></li>
+                    <li><a href="{{ url_for('instruction') }}">说明</a></li>
                     <li><a href="{{ url_for('about') }}">关于</a></li>
-                    <li><a href="{{ url_for('contact') }}">说明</a></li>
                 </ul>
             </div>
         </div>

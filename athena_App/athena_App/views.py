@@ -5,25 +5,31 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import render_template
 from athena_App import app
+from athena_App.formClass import QuestionForm
 
 @app.route('/')
 @app.route('/home')
 def home():
     """Renders the home page."""
+    question = ''
+    form = QuestionForm()
+    question = form.question.data
     return render_template(
         'index.html',
-        title='Home Page',
-        year=datetime.now().year,
+        title = 'Home Page',
+        year = datetime.now().year,
+        form =  form,
+        question = question
     )
 
-@app.route('/contact')
-def contact():
-    """Renders the contact page."""
+@app.route('/instruction')
+def instruction():
+    """Renders the instruction page."""
     return render_template(
-        'contact.html',
-        title='Contact',
+        'instruction.html',
+        title='说明',
         year=datetime.now().year,
-        message='Your contact page.'
+        message='Instruction'
     )
 
 @app.route('/about')
