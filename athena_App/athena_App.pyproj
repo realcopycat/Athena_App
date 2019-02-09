@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="athena_App\data_process\match_pattern_builder.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\formClass.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="athena_App\" />
+    <Folder Include="athena_App\data_process\" />
     <Folder Include="athena_App\static\" />
     <Folder Include="athena_App\static\content\" />
     <Folder Include="athena_App\static\fonts\" />
