@@ -28,7 +28,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="athena_App\data_process\match_pattern_builder.py">
+    <Compile Include="athena_App\data_process\neo4j_import.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\formClass.py">
