@@ -2,6 +2,58 @@
 
 {% block content %}
 
+<div class="row">
+    <p class="lead">
+        检索结果：
+    </p>
+</div>
 
+
+<div class="row">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="panel-group" id="panel-95624">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title" data-toggle="collapse" data-parent="#panel-95624" href="#panel-element-809547">最佳答案</a>
+                    </div>
+                    <div id="panel-element-809547" class="panel-collapse in">
+                        <div class="panel-body">
+                            <div class="row">
+                                <p class="lead">
+                                    {{ answer.matchQ1 }}
+                                </p>
+                            </div>
+                            <div class="row">
+                                <h3>
+                                    {{ answer.bestAnswer }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-95624" href="#panel-element-459861">备选答案</a>
+                    </div>
+                    <div id="panel-element-459861" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <p class="lead">
+                                    {{ answer.matchQ2 }}
+                                </p>
+                            </div>
+                            <div class="row">
+                                <h3>
+                                    {{ answer.secAnswer }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -6,6 +6,8 @@ from datetime import datetime
 from flask import render_template, redirect, url_for
 from athena_App import app
 from athena_App.formClass import QuestionForm
+from athena_App.data_process.keywordCompare import Keyword_Compare, Answer
+
 
 @app.route('/', methods=['POST','GET'])
 @app.route('/home', methods=['POST','GET'])
@@ -15,14 +17,14 @@ def home():
     form = QuestionForm()
     question = form.question.data
     if form.validate_on_submit():
-        return redirect(url_for('answer'))
+        return redirect(url_for('answer',word=question))
     return render_template(
         'index.html',
         title = 'Index Page',
         year = datetime.now().year,
         form =  form,
         question = question
-    )
+        )
 
 @app.route('/instruction')
 def instruction():
@@ -44,10 +46,13 @@ def about():
         message='Your application description page.'
     )
 
-@app.route('/answer')
-def answer():
+@app.route('/answer/<word>')
+def answer(word):
     """Renders the answer page"""
+    print(word)
+    answer=Keyword_Compare(word)
     return render_template(
         'answer.html',
-        title='Answer'
+        title='Answer',
+        answer=answer
         )

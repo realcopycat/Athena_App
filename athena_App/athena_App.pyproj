@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="athena_App\data_process\keywordCompare.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\match_pattern_builder.py">
       <SubType>Code</SubType>
     </Compile>

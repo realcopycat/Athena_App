@@ -8,4 +8,3 @@ app.config['SECRET_KEY']='bigbanana'
 
 import athena_App.views
 
-pass

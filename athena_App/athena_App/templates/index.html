@@ -5,12 +5,23 @@
 <div class="jumbotron">
     <form method="POST">
         {{ form.hidden_tag() }}
-        {{ form.question.label }}
-        {{ form.question(id='question-text-field')}}
-        {{ form.submit() }}
+        <div class="row">
+            <center>
+                {{ form.question.label }}
+            </center>
+        </div>
+        <div class="row">
+            <center>
+                {{ form.question(id='question-text-field')}}
+            </center>
+        </div>
+        <div class="row">
+            <center>
+                {{ form.submit() }}
+            </center>
+        </div>
     </form>
 </div>
-
 
 
 {% endblock %}
