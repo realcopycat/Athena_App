@@ -28,10 +28,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="athena_App\data_process\dictBuilder.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\keywordCompare.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\data_process\match_pattern_builder.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\data_process\robot_test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\formClass.py">
@@ -44,6 +50,7 @@
   <ItemGroup>
     <Folder Include="athena_App\" />
     <Folder Include="athena_App\data_process\" />
+    <Folder Include="athena_App\COMM_robot\" />
     <Folder Include="athena_App\static\" />
     <Folder Include="athena_App\static\content\" />
     <Folder Include="athena_App\static\fonts\" />
@@ -51,6 +58,10 @@
     <Folder Include="athena_App\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="athena_App\COMM_robot\Common_conversation.aiml" />
+    <Content Include="athena_App\COMM_robot\std-startup.xml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="athena_App\templates\answer.html" />
     <Content Include="requirements.txt" />
     <Content Include="athena_App\static\content\bootstrap.css" />

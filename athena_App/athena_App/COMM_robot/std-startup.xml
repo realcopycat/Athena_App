@@ -1,0 +1,14 @@
+<aiml version="1.0.1" encoding="UTF-8">
+  <!-- std-std-startup.xml -->
+
+  <category>
+    <!-- 如果用户输入 "LOAD ALL" -->
+    <pattern>LOAD ALL PATTERN</pattern>
+
+    <template>
+      <learn>./COMM_robot/Common_conversation.xml</learn>
+      
+    </template>
+  </category>
+
+</aiml>
