@@ -65,7 +65,10 @@
     <Content Include="athena_App\COMM_robot\text_dic.txt">
       <Publish>True</Publish>
     </Content>
-    <Content Include="readme.md">
+    <Content Include="athena_App\README.MD">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="README.MD">
       <Publish>True</Publish>
     </Content>
     <Content Include="athena_App\templates\answer.html" />
