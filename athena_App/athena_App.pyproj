@@ -59,12 +59,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="athena_App\COMM_robot\Common_conversation.aiml" />
+    <Content Include="athena_App\COMM_robot\question_analyse.aiml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="athena_App\COMM_robot\std-startup.xml">
       <SubType>Code</SubType>
     </Content>
     <Content Include="athena_App\COMM_robot\text_dic.txt">
       <Publish>True</Publish>
     </Content>
+    <Content Include="athena_App\COMM_robot\text_dict.txt" />
     <Content Include="athena_App\README.MD">
       <SubType>Code</SubType>
     </Content>

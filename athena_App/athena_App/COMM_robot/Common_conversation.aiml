@@ -9,7 +9,7 @@
         <li>纳尼？？? </li>
         <li>这我就不知道了</li>
         <li>。。。不知道额</li>
-        <li>唔... 没有教我怎么回答... </li>
+        <li>唔... 不知怎么回答... </li>
       </random>
     </template>
   </category>
@@ -30,7 +30,7 @@
     <pattern>你好</pattern>
     <template>
       <random>
-        <li>你好，我叫Eric，周博士把我制造出来的，请多指教。</li>
+        <li>你好！</li>
         <li>你好啊~</li>
         <li>Hi</li>
         <li>哈喽，你好</li>
@@ -145,7 +145,7 @@
         <li>
           嗨嗨，他们都说我<get name="star"/> ʅ(‾◡◝)ʃ
         </li>
-        <li>谢谢，周博士教的好</li>
+        <li>谢谢，都是教的好</li>
         <li>哈哈</li>
       </random>
     </template>
@@ -157,7 +157,7 @@
       <random>
         <li>晚安</li>
         <li>Sleep tight~</li>
-        <li>晚安，祝你梦到妹纸~</li>
+        <li>晚安~</li>
       </random>
     </template>
   </category>

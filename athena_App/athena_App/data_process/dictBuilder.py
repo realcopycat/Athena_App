@@ -1,3 +1,4 @@
+#字典生成脚本
 from pymongo import MongoClient as MG
 import jieba
 
