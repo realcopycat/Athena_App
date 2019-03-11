@@ -18,20 +18,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">电信诈骗智能问答系统</a>
+                <a href="{{ url_for('main') }}" class="navbar-brand">电信诈骗智能问答系统</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('home') }}">开始提问</a></li>
-                    <li><a href="{{ url_for('instruction') }}">说明</a></li>
-                    <li><a href="{{ url_for('about') }}">关于</a></li>
+                    <li><a href="{{ url_for('home') }}">智能问答</a></li>
+                    <li><a href="{{ url_for('instruction') }}">案例检索</a></li>
+                    <li><a href="{{ url_for('about') }}">图谱检索</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
+    {% block content %}{% endblock %}
+
     <div class="container body-content">
-        {% block content %}{% endblock %}
+        
         <hr />
         <footer>
             <p>&copy; {{ year }} - PPSUC DEVELOP</p>

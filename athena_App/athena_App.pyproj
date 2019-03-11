@@ -31,16 +31,34 @@
     <Compile Include="athena_App\data_process\dictBuilder.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\data_process\es_databaseBuild.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\data_process\es_QAsearch.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\data_process\keywordBuild.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\keywordCompare.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\data_process\match_pattern_builder.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\data_process\qa_answer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\robot_test.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\data_process\word2vecCompareModel.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\formClass.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\VAR.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="runserver.py" />
@@ -54,6 +72,7 @@
     <Folder Include="athena_App\static\" />
     <Folder Include="athena_App\static\content\" />
     <Folder Include="athena_App\static\fonts\" />
+    <Folder Include="athena_App\static\img\" />
     <Folder Include="athena_App\static\scripts\" />
     <Folder Include="athena_App\templates\" />
   </ItemGroup>
@@ -72,6 +91,10 @@
     <Content Include="athena_App\README.MD">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="athena_App\static\img\1.jpg" />
+    <Content Include="athena_App\static\img\2.jpg" />
+    <Content Include="athena_App\static\img\3.jpeg" />
+    <Content Include="athena_App\templates\newMain.html" />
     <Content Include="README.MD">
       <Publish>True</Publish>
     </Content>

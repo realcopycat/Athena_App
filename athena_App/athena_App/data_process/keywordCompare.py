@@ -18,6 +18,9 @@ def Keyword_Compare(cs):
     collect=db.baiduqa_
     data=collect.find()
 
+    collect2=db.baiduQaFormal
+    data2=collect2.find()
+
     csx=jieba.lcut(cs,cut_all=True)
 
     tmplen=0
@@ -29,6 +32,21 @@ def Keyword_Compare(cs):
     matchQ2=''
 
     for item in data:
+        lx=item['keyword']
+        ret=[x for x in csx if x in lx ]
+        tmplen=len(ret)
+
+        if tmplen>best:
+            matchQ1=item['title']
+            bestAns=item['answer']
+            best=tmplen
+            continue
+        if tmplen>sec:
+            matchQ2=item['title']
+            secAns=item['answer']
+            sec=tmplen
+
+    for item in data2:
         lx=item['keyword']
         ret=[x for x in csx if x in lx ]
         tmplen=len(ret)
