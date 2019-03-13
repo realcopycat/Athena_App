@@ -22,7 +22,6 @@ except ImportError:
 def has_column_major_storage(arr):
     return arr.flags['FORTRAN']
 
-
 _type_conv = {'f':'s', 'd':'d', 'F':'c', 'D':'z'}  # 'd' will be default for 'i',..
 
 

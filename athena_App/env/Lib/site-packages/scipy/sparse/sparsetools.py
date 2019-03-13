@@ -14,7 +14,6 @@ from numpy import deprecate
 def _deprecated():
     pass
 
-
 del deprecate
 
 try:

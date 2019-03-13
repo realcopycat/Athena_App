@@ -83,13 +83,9 @@ def _sqrtm_triu(T, blocksize=64):
                 if j - i > 1:
                     s = R[i, i+1:j].dot(R[i+1:j, j])
                 denom = R[i, i] + R[j, j]
-                num = T[i, j] - s
-                if denom != 0:
-                    R[i, j] = (T[i, j] - s) / denom
-                elif denom == 0 and num == 0:
-                    R[i, j] = 0
-                else:
+                if not denom:
                     raise SqrtmError('failed to find the matrix square root')
+                R[i, j] = (T[i, j] - s) / denom
 
     # Between-block interactions.
     for j in range(nblocks):
@@ -183,7 +179,10 @@ def sqrtm(A, disp=True, blocksize=64):
         X.fill(np.nan)
 
     if disp:
-        if failflag:
+        nzeig = np.any(np.diag(T) == 0)
+        if nzeig:
+            print("Matrix is singular and may not have a square root.")
+        elif failflag:
             print("Failed to find a square root.")
         return X
     else:

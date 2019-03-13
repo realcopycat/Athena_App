@@ -1,15 +1,15 @@
-ËµÃ÷
+ï»¿è¯´æ˜Ž
 ==
 
-### ÎÄ¼þËµÃ÷
+### æ–‡ä»¶è¯´æ˜Ž
 
-- \_\_init__.pyÊÇÏîÄ¿µÄÆô¶¯ÎÄ¼þ
-- formClass.py¶¨ÒåÁËÓÃÓÚ½ÓÊÕÎÊÌâÎÄ±¾µÄ±íµ¥¶ÔÏó
-- views.pyÊÇÊÓÍ¼º¯Êý£¬¶¨ÒåÁË²»Í¬urlÈçºÎ´¦Àí
+- \_\_init__.pyæ˜¯é¡¹ç›®çš„å¯åŠ¨æ–‡ä»¶
+- formClass.pyå®šä¹‰äº†ç”¨äºŽæŽ¥æ”¶é—®é¢˜æ–‡æœ¬çš„è¡¨å•å¯¹è±¡
+- views.pyæ˜¯è§†å›¾å‡½æ•°ï¼Œå®šä¹‰äº†ä¸åŒurlå¦‚ä½•å¤„ç†
 
-### ÎÄ¼þ¼ÐËµÃ÷
+### æ–‡ä»¶å¤¹è¯´æ˜Ž
 
-- COMM_robot´¢´æÁËÓÐ¹ØÎÊ´ð»úÆ÷ÈËµÄºóÌ¨ÎÄ¼þ
-- data_process´¢´æÁËÓÃÓÚÎÊÌâ´¦ÀíµÄpython½Å±¾
-- static°üº¬ÍøÕ¾ËùÐèµÄ¾²Ì¬ÎÄ¼þ
-- templateÄÚÊÇÍøÒ³µÄÄ£°å
+- COMM_robotå‚¨å­˜äº†æœ‰å…³é—®ç­”æœºå™¨äººçš„åŽå°æ–‡ä»¶
+- data_processå‚¨å­˜äº†ç”¨äºŽé—®é¢˜å¤„ç†çš„pythonè„šæœ¬
+- staticåŒ…å«ç½‘ç«™æ‰€éœ€çš„é™æ€æ–‡ä»¶
+- templateå†…æ˜¯ç½‘é¡µçš„æ¨¡æ¿

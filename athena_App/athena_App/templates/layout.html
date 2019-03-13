@@ -6,6 +6,7 @@
     <title>{{ title }} - Q&A system</title>
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <script src="/static/scripts/jquery-2.2.4.min.js"></script>
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
 </head>
 
@@ -22,9 +23,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('home') }}">智能问答</a></li>
-                    <li><a href="{{ url_for('instruction') }}">案例检索</a></li>
-                    <li><a href="{{ url_for('about') }}">图谱检索</a></li>
+                    <li><a href="{{ url_for('QAsearch') }}">智能问答</a></li>
+                    <li><a href="{{ url_for('instruction') }}">类案检索</a></li>
+                    <li><a href="{{ url_for('graph_search') }}">图谱知识查询</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('about') }}">关于</a> </li>
+                    <li><a href="{{ url_for('instruction') }}">使用帮助</a> </li>
                 </ul>
             </div>
         </div>
@@ -33,16 +38,16 @@
     {% block content %}{% endblock %}
 
     <div class="container body-content">
-        
+
         <hr />
         <footer>
             <p>&copy; {{ year }} - PPSUC DEVELOP</p>
         </footer>
     </div>
 
-    <script src="/static/scripts/jquery-1.10.2.js"></script>
-    <script src="/static/scripts/bootstrap.js"></script>
-    <script src="/static/scripts/respond.js"></script>
+    
+    <script   src="/static/scripts/bootstrap.js"></script>
+    <script   src="/static/scripts/respond.js"></script>
     {% block scripts %}{% endblock %}
 
 </body>

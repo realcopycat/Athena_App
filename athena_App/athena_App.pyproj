@@ -37,6 +37,12 @@
     <Compile Include="athena_App\data_process\es_QAsearch.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\data_process\graph_builder.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\data_process\graph_query.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\keywordBuild.py">
       <SubType>Code</SubType>
     </Compile>
@@ -58,9 +64,6 @@
     <Compile Include="athena_App\formClass.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="athena_App\VAR.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="runserver.py" />
     <Compile Include="athena_App\__init__.py" />
     <Compile Include="athena_App\views.py" />
@@ -73,6 +76,7 @@
     <Folder Include="athena_App\static\content\" />
     <Folder Include="athena_App\static\fonts\" />
     <Folder Include="athena_App\static\img\" />
+    <Folder Include="athena_App\static\js\" />
     <Folder Include="athena_App\static\scripts\" />
     <Folder Include="athena_App\templates\" />
   </ItemGroup>
@@ -88,12 +92,44 @@
       <Publish>True</Publish>
     </Content>
     <Content Include="athena_App\COMM_robot\text_dict.txt" />
-    <Content Include="athena_App\README.MD">
+    <Content Include="athena_App\README.md">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="athena_App\static\content\nifty.min.css" />
     <Content Include="athena_App\static\img\1.jpg" />
     <Content Include="athena_App\static\img\2.jpg" />
     <Content Include="athena_App\static\img\3.jpeg" />
+    <None Include="athena_App\static\scripts\_references.js" />
+    <Content Include="athena_App\static\js\bootstrap.min.js" />
+    <Content Include="athena_App\static\js\echarts.min.js" />
+    <Content Include="athena_App\static\js\icons.js" />
+    <Content Include="athena_App\static\js\jquery-2.2.4.min.js" />
+    <Content Include="athena_App\static\js\nifty-demo.min.js" />
+    <Content Include="athena_App\static\js\nifty.min.js" />
+    <Content Include="athena_App\static\js\pace.min.js" />
+    <Content Include="athena_App\static\js\tags.js" />
+    <Content Include="athena_App\static\scripts\bootstrap.js" />
+    <Content Include="athena_App\static\scripts\bootstrap.min.js" />
+    <None Include="athena_App\static\scripts\jquery.validate-vsdoc.js" />
+    <None Include="athena_App\static\scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="athena_App\static\scripts\echarts.js" />
+    <Content Include="athena_App\static\scripts\echarts.min.js" />
+    <Content Include="athena_App\static\scripts\icons.js" />
+    <Content Include="athena_App\static\scripts\jquery-1.10.2.js" />
+    <Content Include="athena_App\static\scripts\jquery-1.10.2.min.js" />
+    <Content Include="athena_App\static\scripts\jquery-1.10.2.min.map" />
+    <Content Include="athena_App\static\scripts\jquery-2.2.4.min.js" />
+    <Content Include="athena_App\static\scripts\jquery.validate.js" />
+    <Content Include="athena_App\static\scripts\jquery.validate.min.js" />
+    <Content Include="athena_App\static\scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="athena_App\static\scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="athena_App\static\scripts\modernizr-2.6.2.js" />
+    <Content Include="athena_App\static\scripts\nifty.min.js" />
+    <Content Include="athena_App\static\scripts\pace.min.js" />
+    <Content Include="athena_App\static\scripts\respond.js" />
+    <Content Include="athena_App\static\scripts\respond.min.js" />
+    <Content Include="athena_App\static\scripts\tags.js" />
+    <Content Include="athena_App\templates\graph_search.html" />
     <Content Include="athena_App\templates\newMain.html" />
     <Content Include="README.MD">
       <Publish>True</Publish>
@@ -107,24 +143,9 @@
     <Content Include="athena_App\static\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="athena_App\static\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="athena_App\static\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="athena_App\static\scripts\bootstrap.js" />
-    <Content Include="athena_App\static\scripts\bootstrap.min.js" />
-    <Content Include="athena_App\static\scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="athena_App\static\scripts\jquery-1.10.2.js" />
-    <Content Include="athena_App\static\scripts\jquery-1.10.2.min.js" />
-    <Content Include="athena_App\static\scripts\jquery-1.10.2.min.map" />
-    <Content Include="athena_App\static\scripts\jquery.validate-vsdoc.js" />
-    <Content Include="athena_App\static\scripts\jquery.validate.js" />
-    <Content Include="athena_App\static\scripts\jquery.validate.min.js" />
-    <Content Include="athena_App\static\scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="athena_App\static\scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="athena_App\static\scripts\modernizr-2.6.2.js" />
-    <Content Include="athena_App\static\scripts\respond.js" />
-    <Content Include="athena_App\static\scripts\respond.min.js" />
-    <Content Include="athena_App\static\scripts\_references.js" />
     <Content Include="athena_App\templates\about.html" />
     <Content Include="athena_App\templates\instruction.html" />
-    <Content Include="athena_App\templates\index.html" />
+    <Content Include="athena_App\templates\QAsearch.html" />
     <Content Include="athena_App\templates\layout.html" />
   </ItemGroup>
   <ItemGroup>
