@@ -34,6 +34,9 @@
     <Compile Include="athena_App\data_process\es_databaseBuild.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\openlaw\es_lawText_database.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\data_process\es_QAsearch.py">
       <SubType>Code</SubType>
     </Compile>
@@ -64,6 +67,24 @@
     <Compile Include="athena_App\formClass.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\openlaw\api_call.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\fact_triple_1.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\fact_triple_1_relyModule.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\graph_build.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\graph_query.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\text_test.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="runserver.py" />
     <Compile Include="athena_App\__init__.py" />
     <Compile Include="athena_App\views.py" />
@@ -72,6 +93,7 @@
     <Folder Include="athena_App\" />
     <Folder Include="athena_App\data_process\" />
     <Folder Include="athena_App\COMM_robot\" />
+    <Folder Include="athena_App\openlaw\" />
     <Folder Include="athena_App\static\" />
     <Folder Include="athena_App\static\content\" />
     <Folder Include="athena_App\static\fonts\" />
