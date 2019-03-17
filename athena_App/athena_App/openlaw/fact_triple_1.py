@@ -15,8 +15,14 @@ class TripleExtractor:
 
     '''利用语义角色标注,直接获取主谓宾三元组,基于A0,A1,A2'''
     def ruler1(self, words, postags, roles_dict, role_index):
+
+        #先取出动词
         v = words[role_index]
+
+        #然后把这个动词的相关信息取出来
         role_info = roles_dict[role_index]
+
+
         if 'A0' in role_info.keys() and 'A1' in role_info.keys():
             s = ''.join([words[word_index] for word_index in range(role_info['A0'][1], role_info['A0'][2]+1) if
                          postags[word_index][0] not in ['w', 'u', 'x'] and words[word_index]])
@@ -41,6 +47,8 @@ class TripleExtractor:
         for index in range(len(postags)):
             tmp = 1
             # 先借助语义角色标注的结果，进行三元组抽取
+
+            #语义抽取是基于谓语的，所以如果这个index根本就不在role_dict里，就根本不需要去做所谓的三元组解析
             if index in roles_dict:
                 flag, triple = self.ruler1(words, postags, roles_dict, index)
                 if flag == '1':

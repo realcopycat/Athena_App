@@ -76,10 +76,13 @@
     <Compile Include="athena_App\openlaw\fact_triple_1_relyModule.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="athena_App\openlaw\graph_build.py">
+    <Compile Include="athena_App\openlaw\mongo_triple_build.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\openlaw\graph_query.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="athena_App\openlaw\mongo_triple_query.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="athena_App\openlaw\text_test.py">
@@ -114,6 +117,9 @@
       <Publish>True</Publish>
     </Content>
     <Content Include="athena_App\COMM_robot\text_dict.txt" />
+    <Content Include="athena_App\openlaw\README.md">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="athena_App\README.md">
       <SubType>Code</SubType>
     </Content>
