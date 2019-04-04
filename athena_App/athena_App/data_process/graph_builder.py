@@ -9,7 +9,7 @@ driver=GD.driver("bolt://localhost:7687",auth=("neo4j","123"))
 #initialize the mongodb`
 client=MC()
 db=client.spider_data
-collect=db.baidu_baike_3_test
+collect=db.baidu_baike_BIG
 
 #write in graph`
 def addData(gr,node1,rela,node2):
@@ -25,9 +25,9 @@ with driver.session() as session:
     count=0
 
     #read data in the mongodb
-    dataSet=collect.find()
+   
 
-    for item in dataSet:
+    for item in collect.find().batch_size(30):
         node1=item['title']
         infoSet=item['basic_info']
 

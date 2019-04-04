@@ -6,8 +6,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, request, jsonify
 from athena_App import app
 from athena_App.formClass import QuestionForm
-#from athena_App.data_process.keywordCompare import Keyword_Compare, Answer
-#from athena_App.data_process.word2vecCompareModel import *
+
 import time
 
 #attention:
@@ -17,7 +16,18 @@ import time
 #from athena_App.data_process.es_QAsearch import *
 #
 
-from athena_App.data_process.graph_query import *
+#from athena_App.data_process.keywordCompare import Keyword_Compare, Answer
+#from athena_App.data_process.word2vecCompareModel import *
+
+#from athena_App.data_process.graph_query import *
+
+#from athena_App.openlaw.graphOfcase_query_echart import *
+
+#reconstruct series
+
+from athena_App.layer_frontInteracting.qa_module import answerFinder
+from athena_App.layer_frontInteracting.kg_module import knowledgeSearch
+from athena_App.layer_frontInteracting.case_module import caseQuery
 
 @app.route('/QAsearch', methods=['POST','GET'])
 def QAsearch():
@@ -61,7 +71,7 @@ def answer(word):
     print(word)
     start=time.clock()
     finder=answerFinder()
-    answer=finder.main(word)
+    answer=finder.findANDpack(word)
     end=time.clock()
     print(str(end-start))
     return render_template(
@@ -86,15 +96,33 @@ def graph_search():
         title = 'Graph search page',
         year = datetime.now().year)
 
-@app.route('/entity_search',methods=['get','post'])
-def entity_search():
+@app.route('/knowledge_search',methods=['get','post'])
+def knowledge_search():
 
     #initialize graph search object
-    graph_result=answerGraph()
+    searchKnowledge=knowledgeSearch()
 
-    entity=request.args.get('entity')
-    json_data=graph_result.entityQuery(str(entity),graph_result.session)
+    des=request.args.get('description')
+    json_data=searchKnowledge.getTotalData_forKnowledgeSearch(des)
     print(json_data)
 
     return jsonify(json_data)
-    
+
+@app.route('/case_search_Test',methods=['get','post'])
+def case_search_Test():
+    return render_template(
+        'case_search_Test.html',
+        title = 'Case search page',
+        year = datetime.now().year)
+
+@app.route('/case_graph_search',methods=['get','post'])
+def case_graph_search():
+
+    caseDes=request.args.get('caseDes')
+    #initialize graph search object
+    case_graph_result=caseQuery(caseDes)
+
+    pre_json_data=case_graph_result.pickBestGraph()
+    print(pre_json_data)
+
+    return jsonify(pre_json_data)

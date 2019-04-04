@@ -1,0 +1,147 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="/static/scripts/pace.min.js"></script>
+
+<script src="/static/scripts/nifty.min.js"></script>
+<script src="/static/scripts/icons.js"></script>
+
+<script src="/static/scripts/echarts.js"></script>
+<script src="/static/scripts/tags.js"></script>
+
+
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="input-group">
+                <input type="text" id="search" class="form-control input-lg" placeholder="请输入你要检索的实体...">
+                <span class="input-group-addon btn btn-mint" onclick="search()">搜索</span>
+            </div>
+        </center>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12" style="height:500px;" id="graph">
+
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).keypress(function (e) {
+        // press 'enter' ,then execute the function
+        if (e.which == 13) {
+            search();
+        }
+    });
+
+    window.onresize = function () {
+        //resize the graph area
+        myChart.resize();
+    }
+
+    //lock the web browser
+    $.ajaxSetup({ async: false });
+
+    var myChart = echarts.init(document.getElementById("graph"));
+
+    //show the loading process
+    //myChart.showLoading();
+
+
+    option = {
+        // backgroundColor: "white",
+        title: {
+            text: '搜索结果',
+            show: false,
+            textStyle: {
+                color: "black",
+                fontWeight: "lighter",
+            }
+        },
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        legend: {
+            x: "center",
+            show: false,
+            backgroundColor: "#E0E0E0",
+            borderColor: "#707070",
+            data: ['center', 'end']
+        },
+        //set legend ,disable
+        series: [
+            {
+                type: 'graph',
+                layout: 'force',
+                symbolSize: 100,
+                edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: 20,
+                edgeLabel: {
+                    normal: {
+                        show: true,
+                        color: '#000000',
+                        fontSize: 12,
+                        formatter: '{c}'
+                    }
+                },
+                force: {
+                    repulsion: 2500,
+                    edgeLength: [10, 20]
+                },
+                focusNodeAdjacency: true,
+                draggable: true,
+                roam: true,
+                categories: [
+                ],
+                //set node's categories ,disable
+                //label: {
+                //    show: true,
+                //    color: "#000000",
+                //    fontSize: 5
+                //},
+                lineStyle: {
+                    normal: {
+                        color: '#000000',
+                        opacity: 1,
+                        width: 10,
+                        curveness: 0.3
+                    }
+                },
+
+                // progressiveThreshold: 700,
+                nodes: [],
+                links: [],
+            }
+        ]
+    };
+
+    //interact with back end
+    function search() {
+
+        $.getJSON('/case_graph_search', {
+            caseDes: $("#search").val(),
+
+        }, function (json) {
+
+            option.series[0].nodes = json.data.map(function (node, idx) {
+                node.id = idx;
+                return node;
+            });
+
+            option.series[0].links = json.links;
+
+            myChart.setOption(option, true);
+
+        });
+    }
+</script>
+
+{% endblock %}
+
+{% block sctipts %}
+{% endblock %}

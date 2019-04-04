@@ -1,13 +1,11 @@
-﻿#fact triple extraction : first try
-
 # based on liuhuanyong's github project
 
-from athena_App.openlaw.fact_triple_1_relyModule import *
+from athena_App.layer_dataOperating.ltp_module import ltpTools
 import re
 
 class TripleExtractor:
     def __init__(self):
-        self.parser = LtpParser()
+        self.parser = ltpTools()
 
     '''文章分句处理, 切分长句，冒号，分号，感叹号等做切分标识'''
     def split_sents(self, content):
@@ -116,13 +114,3 @@ class TripleExtractor:
             svos += svo
 
         return svos
-
-def test():
-    content='多的去了尽可能的全垒打你去浪费'
-    extractor = TripleExtractor()
-    svos = extractor.triples_main(content)
-    print('svos', svos)
-
-test()
-
-

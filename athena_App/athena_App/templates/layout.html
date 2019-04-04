@@ -24,7 +24,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('QAsearch') }}">智能问答</a></li>
-                    <li><a href="{{ url_for('instruction') }}">类案检索</a></li>
+                    <li><a href="{{ url_for('case_search_Test') }}">类案检索</a></li>
                     <li><a href="{{ url_for('graph_search') }}">图谱知识查询</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -35,15 +35,17 @@
         </div>
     </div>
 
-    {% block content %}{% endblock %}
-
+   
+  
+ 
     <div class="container body-content">
-
+        {% block content %}{% endblock %}
         <hr />
         <footer>
             <p>&copy; {{ year }} - PPSUC DEVELOP</p>
         </footer>
     </div>
+        
 
     
     <script   src="/static/scripts/bootstrap.js"></script>

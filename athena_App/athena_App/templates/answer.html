@@ -1,6 +1,20 @@
 ﻿{% extends "layout.html" %}
 
 {% block content %}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <center>
+                    <h4></h4> <strong>查询成功!</strong> 已在数据库内找到相关信息！
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container body-content">
     <div class="row">
         <p class="lead">
@@ -25,9 +39,9 @@
                                     </p>
                                 </div>
                                 <div class="row">
-                                    <h3>
+                                    <p>
                                         {{ answer.bestAnswer }}
-                                    </h3>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -44,9 +58,9 @@
                                     </p>
                                 </div>
                                 <div class="row">
-                                    <h3>
+                                    <p>
                                         {{ answer.secAnswer }}
-                                    </h3>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -55,6 +69,89 @@
             </div>
         </div>
     </div>
+
+    <hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color="#6f5499" size="3" />
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">相关新闻案例</h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>属性</th>
+                                <th>值</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>标题</th>
+                                <th>{{ answer.title }}</th>
+                            </tr>
+                            <tr>
+                                <th>城市</th>
+                                <th>{{ answer.city }}</th>
+                            </tr>
+                            <tr>
+                                <th>地区</th>
+                                <th>{{ answer.region }}</th>
+                            </tr>
+                            <tr>
+                                <th>省份</th>
+                                <th>{{ answer.province }}</th>
+                            </tr>
+                            <tr>
+                                <th>受害人年龄</th>
+                                <th>{{ answer.age }}</th>
+                            </tr>
+                            <tr>
+                                <th>受害者性别</th>
+                                <th>{{ answer.gender }}</th>
+                            </tr>
+                            <tr>
+                                <th>受害者职业</th>
+                                <th>{{ answer.job }}</th>
+                            </tr>
+                            <tr>
+                                <th>事件发生的月份</th>
+                                <th>{{ answer.month }}</th>
+                            </tr>
+                            <tr>
+                                <th>事件持续时间</th>
+                                <th>{{ answer.duration }}</th>
+                            </tr>
+                            <tr>
+                                <th>损失金额</th>
+                                <th>{{ answer.amount }}</th>
+                            </tr>
+                            <tr>
+                                <th>手段</th>
+                                <th>{{ answer.method }}</th>
+                            </tr>
+                            <tr>
+                                <th>事件类型</th>
+                                <th>{{ answer.type }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="well">
+                        <p>
+                            {{ answer.plaintext }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
     {% endblock %}

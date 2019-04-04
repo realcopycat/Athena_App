@@ -26,9 +26,12 @@ for item in data:
 
     check=writeCollect.find()
 
-    if set==0:
-        content=item["judgement"]["plaintext"]
-        triples=extor.triples_main(content)
-        insertData={"title":item["judgement"]["title"],"triples":triples}
-        writeCollect.insert_one(insertData)
-        print("成功写入一个文档！")
+    try:
+        if set==0:
+            content=item["judgement"]["plaintext"]
+            triples=extor.triples_main(content)
+            insertData={"title":item["judgement"]["title"],"triples":triples}
+            writeCollect.insert_one(insertData)
+            print("成功写入一个文档！")
+    except:
+        continue
