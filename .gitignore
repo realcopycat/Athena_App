@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /athena_App/env/Lib/site-packages
+/athena_App/env/Scripts
