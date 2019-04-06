@@ -14,13 +14,13 @@ class dataImporter():
         '''初始化设置'''
 
         #可修改：定义索引名称
-        self._index="baike_data_abstract"
+        self._index="law_data"
 
         #可修改，但一般不需要，定义es服务器设置
         self.es=ES([{"host":"127.0.0.1","port":9200}])
 
         #可修改：定义文档类型
-        self.doc_type="knowledge"
+        self.doc_type="line"
 
         #无需修改，链接mongodb
         self.MGclient=MG()
@@ -29,7 +29,7 @@ class dataImporter():
         self.db=self.MGclient.spider_data
 
         #可修改,指定collection的名称
-        self.collect=self.db.baidu_baike_BIG
+        self.collect=self.db.LAW
 
     def create_mapping(self):
         '''用于创建映射'''
@@ -40,7 +40,7 @@ class dataImporter():
                 #指定文档类型 #注意！据说是官方已不再建议使用的一种特性
                 self.doc_type:{
                     "properties":{
-                        "title":{
+                        "LawTitle":{
 
                             #type indicates the type of this field
                             #不能使用string，这是版本问题，text似乎表示可以索引的意思
@@ -53,11 +53,24 @@ class dataImporter():
                             "search_analyzer":"ik_smart",
 
                             #决定字段是否可以被用户搜索
-                            "index":True
+                            "index":False
 
                             },#注意此处的逗号！
 
-                        "abstract":{
+                        "lineNo":{
+
+                            #同上
+                            "type":"text",
+
+                            "analyzer":"ik_max_word",
+
+                            "search_analyzer":"ik_smart",
+
+                            "index":False
+
+                            },
+                        
+                        "line":{
 
                             #同上
                             "type":"text",
@@ -125,35 +138,36 @@ def main_exe():
     #执行插入
     for item in qaData:
         index +=1
-
         print(index)
 
-        #制造插入es的数据
-        action={
-            "_index":worker._index,
-            "_type":worker.doc_type,
-            "_source":{
-                "title":item['title'],
-                "abstract":item['abstract']
+        for line in item['content']:
+            #制造插入es的数据
+            action={
+                "_index":worker._index,
+                "_type":worker.doc_type,
+                "_source":{
+                    "LawTitle":item['name'],
+                    "lineNo":line['lineNo'],
+                    "line":line['line']
+                    }
                 }
-            }
 
-        data_list.append(action)
+            data_list.append(action)
 
-        #一旦达到设置的上限就执行插入
-        if index>list_max:
+            #一旦达到设置的上限就执行插入
+            if index>list_max:
 
-            #input()
-            worker.insert_data(data_list)
-            #input()
+                #input()
+                worker.insert_data(data_list)
+                #input()
 
-            index=0
-            count +=1
+                index=0
+                count +=1
             
-            print(count)
+                print(count)
 
-            #重置
-            data_list=[]
+                #重置
+                data_list=[]
 
     end=time.time()
 

@@ -41,3 +41,11 @@
         - "amount"
         - "method"
         - "type"
+
+- ·¨Ìõ¿â
+    - __index_ : "Law_data"
+    - _doc_type_ : "line"
+    - _properties_ :
+        - "LawTitle"
+        - "lineNo"
+        - "line"

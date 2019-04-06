@@ -65,6 +65,9 @@
     <Compile Include="athena_App\layer_dataOperating\textParse_module.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\layer_dataOperating\txt2mongo.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\layer_frontInteracting\case_module.py">
       <SubType>Code</SubType>
     </Compile>

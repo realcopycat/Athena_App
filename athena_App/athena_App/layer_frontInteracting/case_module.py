@@ -229,16 +229,20 @@ class caseQuery():
         textDataDict["court"]=singleDoc['judgement']['court']
         textDataDict['title']=singleDoc['judgement']['title']
         textDataDict['caseNo']=singleDoc['judgement']['caseNo']
+        textDataDict['crime']=singleDoc['judgement']['cause']
+
+        defedantParse_tmp=singleDoc['judgement']['litigants']
+        textDataDict['defedant']=[]
+        for each in defedantParse_tmp:
+            if each['type']=='Defedant':
+                textDataDict['defedant'].append(each['name'])
+            if each['type']=='Plaintiff':
+                textDataDict['plaintiff']=each['name']
+
         #需要RE解析的信息
         puretext=singleDoc['judgement']['plaintext']
-        try:
-            textDataDict['prosecutor']=re.search('(?<=公诉机关).*?((?=\\r)|(?=。))',puretext).group(0)
-        except:
-            pass
-        try:
-            textDataDict["defendant"]=re.search('(?<=被告人).*?(?=，)',puretext)
-        except:
-            pass
+        
+       
 
 
             
