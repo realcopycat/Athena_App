@@ -4,6 +4,8 @@ from athena_App.layer_dataOperating.es_search import searchInEs
 from athena_App.layer_dataOperating.neo4j_search import neo4jQuery
 from athena_App.layer_dataOperating.textParse_module import TripleExtractor
 from athena_App.layer_dataOperating.sy_module import senCompare
+from athena_App.layer_dataOperating.mongo_search import mongoSearch
+import re
 
 class caseQuery():
 
@@ -16,7 +18,7 @@ class caseQuery():
         self.index='case_data'
         self.docType='caseText'
         self.key='abstract'
-        self.res_limit=20
+        self.res_limit=10
         self.des=des
 
         self.rela_score=0.7
@@ -71,6 +73,9 @@ class caseQuery():
 
             if title_score>self.score_standard:
                 break
+        #为了getTextData可以访问,特地设置成员
+        self.bestTitle=highestTitle
+        self.bestScore=highestScore
 
         return highestTitle,list(relative_relation)
 
@@ -78,26 +83,20 @@ class caseQuery():
         '''调用后输出最好的画图数据'''
 
         coreTitle,coreRela=self.titlePick()
-
         graphData=self.graphQuery.attrQuery('belong',coreTitle)
 
         node_list=[]
         link_list=[]
-
         #控制节点大小
         node_count={}
-
         #统计匹配的关系数
         link_pick=0
-
         for record in graphData:
-
             #取出node标签数据
             tmpNode1=record["a"]._properties["text"]
             tmpNode2=record["c"]._properties["text"]
             node_list.append(tmpNode1)
             node_list.append(tmpNode2)
-
             #抽出linkType数据
             tmpLink=record["b"].type
             print(tmpLink)
@@ -199,6 +198,54 @@ class caseQuery():
 
         return final
 
+    '''
+        获取数据的主函数
+    '''
+    def getData(self):
+        '''
+            试图综合画图数据以及文字标签数据
+        '''
+
+        graphData=pickBestGraph()
+
+    '''
+        解析标签数据
+    '''
+    def getTextData(self):
+        '''
+            根据es预选的结果
+            给出匹配度
+            给出可能的判决
+            给出可能相关的法条
+        '''
+        #以下函数的参数决定于数据库设置,注意这里对于嵌套字典的索引方式
+        singleDoc=mongoSearch.singleFieldSearch('spider_data','lawText','judgement.title',self.bestTitle)
+
+        textDataDict=dict()
+        #相似度计算，算法待优化
+        textDataDict["score"]=self.bestScore
+        #现成的基本信息
+        textDataDict["judgeDate"]=singleDoc['judgement']['judgeDate']
+        textDataDict["court"]=singleDoc['judgement']['court']
+        textDataDict['title']=singleDoc['judgement']['title']
+        textDataDict['caseNo']=singleDoc['judgement']['caseNo']
+        #需要RE解析的信息
+        puretext=singleDoc['judgement']['plaintext']
+        try:
+            textDataDict['prosecutor']=re.search('(?<=公诉机关).*?((?=\\r)|(?=。))',puretext).group(0)
+        except:
+            pass
+        try:
+            textDataDict["defendant"]=re.search('(?<=被告人).*?(?=，)',puretext)
+        except:
+            pass
+
+
             
+
+
+
+
+
 
 
