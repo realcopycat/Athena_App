@@ -122,7 +122,7 @@ def case_graph_search():
     #initialize graph search object
     case_graph_result=caseQuery(caseDes)
 
-    pre_json_data=case_graph_result.pickBestGraph()
+    pre_json_data=case_graph_result.getData()
     print(pre_json_data)
 
     return jsonify(pre_json_data)

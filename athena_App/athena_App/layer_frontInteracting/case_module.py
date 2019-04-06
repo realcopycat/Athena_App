@@ -20,6 +20,7 @@ class caseQuery():
         self.key='abstract'
         self.res_limit=10
         self.des=des
+        self.searchMongo=mongoSearch()
 
         self.rela_score=0.7
         #达到标准分数就不再检索，直接返回答案，加快速度
@@ -205,8 +206,13 @@ class caseQuery():
         '''
             试图综合画图数据以及文字标签数据
         '''
-
-        graphData=pickBestGraph()
+        #由于存在对象内成员的动态定义
+        #这三个函数的位置切勿随意调换
+        addup = dict()
+        addup['graphData']=self.pickBestGraph()
+        addup['tagData']=self.getTextData()
+        addup['lawData']=self.getLawData()
+        return addup
 
     '''
         解析标签数据
@@ -219,37 +225,66 @@ class caseQuery():
             给出可能相关的法条
         '''
         #以下函数的参数决定于数据库设置,注意这里对于嵌套字典的索引方式
-        singleDoc=mongoSearch.singleFieldSearch('spider_data','lawText','judgement.title',self.bestTitle)
+        
+        singleDoc=self.searchMongo.singleFieldSearch('spider_data','lawText','judgement.title',self.bestTitle)
 
         textDataDict=dict()
         #相似度计算，算法待优化
-        textDataDict["score"]=self.bestScore
+        textDataDict["相似度"]=self.bestScore
         #现成的基本信息
-        textDataDict["judgeDate"]=singleDoc['judgement']['judgeDate']
-        textDataDict["court"]=singleDoc['judgement']['court']
-        textDataDict['title']=singleDoc['judgement']['title']
-        textDataDict['caseNo']=singleDoc['judgement']['caseNo']
-        textDataDict['crime']=singleDoc['judgement']['cause']
+        textDataDict["判决日期"]=singleDoc['judgement']['judgeDate']
+        textDataDict["审理法院"]=singleDoc['judgement']['court']
+        textDataDict['案例标题']=singleDoc['judgement']['title']
+        textDataDict['案例编号']=singleDoc['judgement']['caseNo']
+        #以下cause作为成员供法条查询使用
+        try:
+            self.cause=singleDoc['judgement']['cause'][0]
+            textDataDict['涉及的违法或犯罪行为']=singleDoc['judgement']['cause'][0]
+        except:
+            self.cause=False
 
-        defedantParse_tmp=singleDoc['judgement']['litigants']
-        textDataDict['defedant']=[]
-        for each in defedantParse_tmp:
-            if each['type']=='Defedant':
-                textDataDict['defedant'].append(each['name'])
-            if each['type']=='Plaintiff':
-                textDataDict['plaintiff']=each['name']
+        try:
+            defedantParse_tmp=singleDoc['judgement']['litigants']
+            textDataDict['被告人']=[]
+            for each in defedantParse_tmp:
+                if each['type']=='Defedant':
+                    textDataDict['被告人'].append(each['name'])
+                if each['type']=='Plaintiff':
+                    textDataDict['起诉方']=each['name']
+        except:
+            pass
 
         #需要RE解析的信息
         puretext=singleDoc['judgement']['plaintext']
+        pattern_forLaw=re.compile('((?<=依照).*?(?=之规定))|((?<=依照).*?(?=的规定))|((?<=依照).*?(?=规定))|((?<=根据).{4,25}?(?=规定))')
+        textDataDict['案例涉及的法律法规']=re.findall(pattern_forLaw,puretext)
+
+        return textDataDict
+
+    '''
+        从Es中获取相关的法律法条
+    '''
+    def getLawData(self):
+        '''
+            由ES引擎给出相关的具体法条
+        '''
+
+        #下列参数与具体的数据库相关,
+        #根据标题返回五个法条
+        resOfLaw1 = searchInEs(self.bestTitle,'law_data','line','line',5)
+
+        #下列参数与具体数据库相关
+        set=0
+        if self.cause:
+            resOfLaw2 = searchInEs(self.cause,'law_data','line','line',5)
+            set=1
+
+        #包装相关法条
+        lawLine = list()
+        for line in resOfLaw1:
+            lawLine.append(line['_source'])
+        if set == 1:
+            for line in resOfLaw2:
+                lawLine.append(line['_source'])
         
-       
-
-
-            
-
-
-
-
-
-
-
+        return lawLine
