@@ -47,6 +47,8 @@ class caseQuery():
 
         try:
             relaPick=self.destriptionParse()[1]
+            if isinstance(relaPick,list):
+                relaPick=relaPick[1]
 
         #为了防止三元组解析失效，
         except Exception as e:
@@ -232,8 +234,14 @@ class caseQuery():
         #相似度计算，算法待优化
         textDataDict["相似度"]=self.bestScore
         #现成的基本信息
-        textDataDict["判决日期"]=singleDoc['judgement']['judgeDate']
-        textDataDict["审理法院"]=singleDoc['judgement']['court']
+        try:
+            textDataDict["判决日期"]=singleDoc['judgement']['judgeDate']
+        except:
+            pass
+        try:
+            textDataDict["审理法院"]=singleDoc['judgement']['court']
+        except:
+            pass
         textDataDict['案例标题']=singleDoc['judgement']['title']
         textDataDict['案例编号']=singleDoc['judgement']['caseNo']
         #以下cause作为成员供法条查询使用
