@@ -47,6 +47,11 @@
 
                 </div>
             </div>
+            <div class="well">
+                <div style="height:700px;width:auto" id="tree">
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -271,6 +276,51 @@
         ]
     };
 
+    option_tree = {
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series: [
+            {
+                type: 'tree',
+
+                data: {} ,
+
+                top: '18%',
+                bottom: '14%',
+
+                layout: 'orthogonal',
+
+                symbol: 'emptyCircle',
+
+                symbolSize: 7,
+
+                initialTreeDepth: 3,
+
+                animationDurationUpdate: 750,
+                label: {
+                    normal: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    }
+                },
+
+                leaves: {
+                    label: {
+                        normal: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    }
+                },
+            }
+        ]
+    };
+
     //interact with back end
     function search_knowledge() {
 
@@ -278,31 +328,34 @@
             description: $("#search").val(),
 
         }, function (json) {
-
+            dynamicInfoCreate(json);
             console.log(json);
             option.series[0].nodes = json.data;
 
             option.series[0].links = json.links;
-
+            
+            option_tree.series[0].data = [json.treeData];
             $("#graphRow").show();
 
             var myChart = echarts.init(document.getElementById("graph"));
+            var myTree = echarts.init(document.getElementById("tree"));
             myChart.setOption(option, true);
-
+            myTree.setOption(option_tree, true);
+           
             
-
-            dynamicInfoCreate(json);
 
             
         });
     }
 
     function dynamicInfoCreate(jsonData) {
+        $("#specificInfo").show()
         var data = jsonData.specificData;
 
-        var count = 1;
+        var count = 0;
         data.forEach(function (x) {
-
+            
+            count = count + 1; console.log(count);
             var tmp_id = 'title' + count;
             document.getElementById(tmp_id).innerHTML = x.key;
 
@@ -318,14 +371,14 @@
                 };
             };
             console.log(store_text)
-            var tmp_id = 'content' + count;
-            document.getElementById(tmp_id).appendChild(store_text)
+            var tmp_id2 = 'content' + count;
+            document.getElementById(tmp_id2).appendChild(store_text)
 
-            count = count + 1;
+            
 
         });
 
-        $("#specificInfo").show()
+        
     };
 
 

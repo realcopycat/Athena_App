@@ -29,6 +29,7 @@ from athena_App.layer_frontInteracting.qa_module import answerFinder
 from athena_App.layer_frontInteracting.kg_module import knowledgeSearch
 from athena_App.layer_frontInteracting.case_module import caseQuery
 
+
 @app.route('/QAsearch', methods=['POST','GET'])
 def QAsearch():
     """Renders the QAsearch page."""
@@ -126,3 +127,15 @@ def case_graph_search():
     print(pre_json_data)
 
     return jsonify(pre_json_data)
+
+@app.route('/knife',methods=['get','post'])
+def knife():
+    return render_template(
+        'knife.html',
+        title = 'KNIFE SEARCH',
+        year = datetime.now().year
+        )
+
+@app.route('/searchAll',methods=['get','post'])
+def searchAll():
+    pass

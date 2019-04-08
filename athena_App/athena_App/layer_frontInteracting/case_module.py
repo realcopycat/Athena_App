@@ -22,7 +22,9 @@ class caseQuery():
         self.des=des
         self.searchMongo=mongoSearch()
 
-        self.rela_score=0.7
+        #达到一定的分数就属于“核心相关关系”
+        #“coreRela”
+        self.rela_score=0.4
         #达到标准分数就不再检索，直接返回答案，加快速度
         self.score_standard=0.8
 
@@ -83,17 +85,23 @@ class caseQuery():
         return highestTitle,list(relative_relation)
 
     def pickBestGraph(self):
-        '''调用后输出最好的画图数据'''
-
+        '''
+            调用后输出画图数据
+        '''
+        #提取案例名称
         coreTitle,coreRela=self.titlePick()
         graphData=self.graphQuery.attrQuery('belong',coreTitle)
-
+        #设定画图数据集
         node_list=[]
         link_list=[]
         #控制节点大小
         node_count={}
         #统计匹配的关系数
         link_pick=0
+        #记录直接相关的关键节点
+        coreNode=[]
+        sub_coreNode=[]
+
         for record in graphData:
             #取出node标签数据
             tmpNode1=record["a"]._properties["text"]
@@ -107,50 +115,60 @@ class caseQuery():
             linkItem["source"]=tmpNode1
             linkItem["target"]=tmpNode2
             linkItem["value"]=tmpLink
-
+            #设置样式
             linkItem["label"]={}
             linkItem["label"]["normal"]={}
             linkItem["label"]["normal"]["show"]=True
             linkItem["label"]["normal"]["formatter"]=tmpLink
-
+            #判断是否为核心关系数据，设置更加显眼的样式
             if tmpLink in coreRela:
                 linkItem["lineStyle"]={}
                 linkItem["lineStyle"]["normal"]={}
                 linkItem["lineStyle"]["normal"]["color"]="#34E52D"
                 linkItem["label"]["normal"]["color"]="#34E52D"
-
+                #为统计的需要计数
                 link_pick+=1
-
+                #作为核心关系所链接的节点，做特殊标记
+                coreNode.append(tmpNode1)
+                coreNode.append(tmpNode2)
+            else:
+                #如果不在核心关系之内，检测是否其中一个节点与核心节点相联系
+                if tmpNode1 in coreNode:
+                    sub_coreNode.append(tmpNode2)
+                if tmpNode2 in coreNode:
+                    sub_coreNode.append(tmpNode1)
+            #最后加入数据集
             link_list.append(linkItem)
-
-            #链接计数
+            #每个节点拥有的链接计数
             try:
                 node_count[tmpNode1] +=1
             except:
                 node_count[tmpNode1]=0
-
+            #设置被接入的节点
             if tmpNode2 not in node_count:
                 node_count[tmpNode2]=0
-
+        
+        #取集合以保证节点唯一性
+        coreNode=list(set(coreNode))
+        sub_coreNode=list(set(sub_coreNode))
+        sub_coreNode=[s for s in sub_coreNode if s not in coreNode]
         node_set=list(set(node_list))
         node_data=[]
-
         #数据统计部分：node
         node_short=0
         node_long=0
         node_text=0
-
         #数据统计部分：link
         link_A=0
         link_B=0
         link_C=0
         link_D=0
-
+        #对节点数据遍历，做统计分析
         for node in node_set:
             data={}
             data["name"]=node
             data["draggable"]=True
-
+            #节点分级
             if node_count[node]>=10:
                 link_A+=1
             elif ((node_count[node]>=6)&(node_count[node]<10)):
@@ -159,8 +177,7 @@ class caseQuery():
                 link_C+=1
             elif ((node_count[node]>=0)&(node_count[node]<3)):
                 link_D+=1
-            
-
+            #节点分类
             if len(node)>=15:
                 data["category"]="text"
                 node_text=node_text+1
@@ -170,12 +187,19 @@ class caseQuery():
             elif ((len(node)>0)&(len(node)<7)):
                 data["category"]="short"
                 node_short=node_short+1
-
+            #添加新分类
+            if node in coreNode:
+                data["category"]='Core'
+            elif node in sub_coreNode:
+                data["category"]='subCore'
+            #根据链接数目设置节点大小
             if node_count[node]==0:
                 data["symbolSize"]=30
             else:
                 data["symbolSize"]=30+node_count[node]*3
-
+                if data["symbolSize"]>=60:
+                    data["symbolSize"]=60
+            #写入数据
             node_data.append(data)
 
         #数据统计部分:node

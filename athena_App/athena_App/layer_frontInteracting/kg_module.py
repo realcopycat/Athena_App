@@ -130,8 +130,11 @@ class knowledgeSearch():
         sorted_relainfo=sorted(relaInfo_forDes,key=operator.itemgetter('score'))
 
        
-        return sorted_relainfo
+        return sorted_relainfo,coreWord
 
+    '''
+        获取所有呈现数据
+    '''
     def getTotalData_forKnowledgeSearch(self,des):
 
         titleList=self.es_presearch(des)
@@ -140,22 +143,89 @@ class knowledgeSearch():
         drawingData=self.getDrawingData(titleList)
         totalData["data"]=drawingData["data"]
         totalData["links"]=drawingData["links"]
-
-        #最后那个框是一个切片操作
-        totalData["specificData"]=self.getSpecifyData(titleList,des)[0:5:1]
+        #最后那个框是一个切片操作,coreWord用于树图分析
+        #存在参数依赖关系，故调用顺序切勿变换
+        totalData["specificData"],coreWord=self.getSpecifyData(titleList,des)[0:5:1]
         print(totalData["specificData"])
+        #获取树图数据
+        totalData["treeData"]=self.getTreeData(titleList,coreWord)
+        #totalData["treeData"]={"name":1,"children":[{"name":2}]}
 
         return totalData
 
+    '''
+        获取树图数据
+    '''
+    def getTreeData(self,titleList,coreWordList):
 
+        #获取需要绘制树图的词条
+        simLimit=0.5
+        toBuildTree=[]
+        for each in titleList:
+            hightestScoreOfEach=0
+            for eachWord in coreWordList:
+                tmpScore=senCompare(each,eachWord)
+                if hightestScoreOfEach<tmpScore:
+                    hightestScoreOfEach=tmpScore
+            if hightestScoreOfEach>simLimit:
+                toBuildTree.append(each)
 
+        #从数据库中取数据
+        rawData=[]
+        for eachTitle in toBuildTree:
+            if self.mongoSearch.singleFieldSearch(self.dbName,self.collection,'title',eachTitle):
+                    rawData.append(self.mongoSearch.singleFieldSearch(self.dbName,self.collection,'title',eachTitle))
+            else:
+                rawData.append(self.mongoSearch.singleFieldSearch(self.dbName,self.collection2,'title',eachTitle))
 
+        #根据原始数据构建树图数据
+        tree=dict()
+        #初层节点
+        tree['name']='知识根节点'
+        #tree['itemStyle']={}
+        #tree['label']={}
+        #按原始数据构建节点
+        #为了使过程清晰，使用了长变量名
+        tree['children']=[]
+        for eachDoc in rawData:
 
+            #构建basic_info的tree
+            basicInfoTree=dict()
+            basicInfoTree['name']='概要'
+            basicInfoTree['children']=[]
+            tmpRawDictOF_basic_info=eachDoc['basic_info']
+            for basic_info_key in tmpRawDictOF_basic_info.keys():
+                tmpUnitDict={'name':basic_info_key,'children':[{'name':tmpRawDictOF_basic_info[basic_info_key]}]}
+                basicInfoTree['children'].append(tmpUnitDict)
 
+            #构建relative_info的tree
+            relativeInfoTree=dict()
+            relativeInfoTree['name']='从属信息'
+            relativeInfoTree['children']=[]
+            tmpRawDictOF_relative_info=eachDoc['relative_info']
+            for rela_info_key in tmpRawDictOF_relative_info.keys():
+                tmpInfoUnit=dict()
+                tmpInfoUnit['name']=rela_info_key
+                tmpInfoUnit['children']=[]
+                for eachUnitKey in tmpRawDictOF_relative_info[rela_info_key].keys():
+                    tmpBasicUnit=dict()
+                    tmpBasicUnit['name']=eachUnitKey
+                    tmpBasicUnit['children']=[]
+                    for eachPara in tmpRawDictOF_relative_info[rela_info_key][eachUnitKey]:
+                        tmpPara=dict()
+                        tmpPara['name']=eachPara
+                        tmpPara['label']={'normal':{'show':False},'emphasis':{'show':True}}
+                        tmpBasicUnit['children'].append(tmpPara)
+                    tmpInfoUnit['children'].append(tmpBasicUnit)
+                relativeInfoTree['children'].append(tmpInfoUnit)
 
+            docTree=dict()
+            docTree['name']=eachDoc['title']
+            docTree['children']=[]
+            docTree['children'].append(basicInfoTree)
+            docTree['children'].append(relativeInfoTree)
+            tree['children'].append(docTree)
 
+        return tree
 
-
-
-
-
+            

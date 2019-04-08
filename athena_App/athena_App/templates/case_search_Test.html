@@ -71,7 +71,7 @@
 </div>
 
 <div class="row" id="caseGraphRow">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h3>案例图谱查询结果</h3>
         </div>
@@ -119,16 +119,30 @@
             show: false
         },
         legend: {
-            data: [{
-                name: "short"
+            data: [
+                {
+                    name: "short"
+                },
+                {
+                    name: "long"
+                },
+                {
+                    name: "text"
+                },
+                {
+                    name:"Core"
+                },
+                {
+                    name:"subCore"
+                }
+            ],
+            selected: {
+                'Core': true,
+                'subCore': true,
+                'short': false,
+                'long': false,
+                'text':false
             },
-            {
-                name: "long"
-            },
-            {
-                name: "text"
-            }
-            ]
         },
         tooltip: {},
         animationDurationUpdate: 1500,
@@ -168,17 +182,32 @@
                             color: "#FF2E64"
                         }
                     },
-                    label:
-                    {
+                    label: {
                         normal: {
-                            show: false
+                            show:false
                         },
-                        emphasize: {
-                            show: true
+                        emphasis: {
+                            show:true
                         }
                     }
-                }
-
+                },
+                {
+                    name: "Core",
+                    itemStyle: {
+                        normal: {
+                            color: "#FF4747"
+                        }
+                    },
+                },
+                {
+                    name: "subCore",
+                    itemStyle: {
+                        normal: {
+                            color: "#FDFF83"
+                        }
+                    },
+                },
+                
                 ],
                 label: {
                     normal: {

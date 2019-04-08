@@ -74,6 +74,9 @@
     <Compile Include="athena_App\layer_frontInteracting\kg_module.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\layer_frontInteracting\knife_module.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\layer_frontInteracting\qa_answer.py" />
     <Compile Include="athena_App\layer_frontInteracting\qa_module.py">
       <SubType>Code</SubType>
@@ -1846,6 +1849,7 @@
     <Content Include="athena_App\templates\case_search.html" />
     <Content Include="athena_App\templates\case_search_Test.html" />
     <Content Include="athena_App\templates\graph_search.html" />
+    <Content Include="athena_App\templates\knife.html" />
     <Content Include="athena_App\templates\newMain.html" />
     <Content Include="athena_App\todo_list.md">
       <SubType>Code</SubType>
