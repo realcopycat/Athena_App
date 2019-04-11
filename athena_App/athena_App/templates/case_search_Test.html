@@ -1,0 +1,395 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<script src="/static/scripts/pace.min.js"></script>
+
+<script src="/static/scripts/nifty.min.js"></script>
+<script src="/static/scripts/icons.js"></script>
+
+<script src="/static/scripts/echarts.js"></script>
+<script src="/static/scripts/tags.js"></script>
+
+
+<div class="page-header">
+    <h1></h1>
+</div>
+
+
+
+
+<div class="row">
+    <center>
+
+        <h1>Case Search</h1>
+
+        <form class="form-inline">
+            <div class="input-group">
+                <input type="text" id="search" class="form-control input-lg" placeholder="请简要描述您的经历...">
+
+            </div>
+
+        </form>
+        <button class="btn btn-default" onclick="search_knowledge()">搜索</button>
+    </center>
+</div>
+
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color="#6f5499" size="3" />
+
+<div class="row">
+    <div id="relaData">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">案例内容摘要</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        属性
+                                    </th>
+                                    <th>
+                                        内容
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="insert_pos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6" id="law_pos">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="caseGraphRow">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3>案例图谱查询结果</h3>
+        </div>
+        <div class="panel-body">
+            <div class="well">
+                <div class="col-lg-12" style="height:700px;" id="graph">
+                    <
+                </div>
+            </div>
+
+            <div class="well">
+                <div class="col-lg-12" style="height:700px;" id="stat">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#caseGraphRow").hide()
+    $("#relaData").hide()
+
+    $(document).keypress(function (e) {
+        // press 'enter' ,then execute the function
+        if (e.which == 13) {
+            search();
+        }
+    });
+
+    window.onresize = function () {
+        //resize the graph area
+        myChart.resize();
+    }
+
+    //lock the web browser
+    $.ajaxSetup({ async: false });
+
+
+
+    option = {
+        backgroundColor: '#0f375f',
+        title: {
+            text: 'Graph 简单示例',
+            show: false
+        },
+        legend: {
+            data: [
+                {
+                    name: "short"
+                },
+                {
+                    name: "long"
+                },
+                {
+                    name: "text"
+                },
+                {
+                    name:"Core"
+                },
+                {
+                    name:"subCore"
+                }
+            ],
+            selected: {
+                'Core': true,
+                'subCore': true,
+                'short': false,
+                'long': false,
+                'text':false
+            },
+        },
+        tooltip: {},
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        series: [
+            {
+                type: 'graph',
+                layout: 'force',
+                hoverAnimation: true,
+                focusNodeAdjacency: true,
+                symbolSize: 50,
+                force: {
+                    repulsion: 100,
+                    edgeLength: [50, 200]
+                },
+                roam: true,
+                categories: [{
+                    name: "short",
+                    itemStyle: {
+                        normal: {
+                            color: "#2B73FF"
+                        }
+                    }
+                },
+                {
+                    name: "long",
+                    itemStyle: {
+                        normal: {
+                            color: "#2EFFAE"
+                        }
+                    }
+                },
+                {
+                    name: "text",
+                    itemStyle: {
+                        normal: {
+                            color: "#FF2E64"
+                        }
+                    },
+                    label: {
+                        normal: {
+                            show:false
+                        },
+                        emphasis: {
+                            show:true
+                        }
+                    }
+                },
+                {
+                    name: "Core",
+                    itemStyle: {
+                        normal: {
+                            color: "#FF4747"
+                        }
+                    },
+                },
+                {
+                    name: "subCore",
+                    itemStyle: {
+                        normal: {
+                            color: "#A8AE00"
+                        }
+                    },
+                },
+                
+                ],
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true,
+                        color: "#5FB7D5",
+                        fontSize: 15
+                    }
+                },
+                edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: [4, 10],
+                edgeLabel: {
+                    normal: {
+                        textStyle: {
+                            fontSize: 10
+                        }
+                    },
+                    emphasis: {
+                        show: true,
+                        color: "#000000",
+                        fontSize: 13
+                    },
+                    formatter: "{c}"
+                },
+                lineStyle: {
+                    normal: {
+                        opacity: 0.9,
+                        width: 2,
+                        curveness: 0
+                    },
+                    emphasis: {
+                        opacity: 1,
+                        width: 5,
+                        curveness: 0.2
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        color: "#FFA465"
+                    }
+                }
+            }
+        ]
+    };
+
+    function dynamicBuild(jsonData) {
+        var tagDict = jsonData.tagData;
+        var lawList = jsonData.lawData;
+
+        for (var key in tagDict) {
+            var tmp_row = document.createElement("tr");
+            
+            var tmp_value = document.createElement("th");
+            tmp_value.textContent = tagDict[key];
+            var tmp_key = document.createElement("th");
+            tmp_key.textContent = key;
+
+            tmp_row.appendChild(tmp_key);
+            tmp_row.appendChild(tmp_value);
+
+            document.getElementById("insert_pos")
+                .appendChild(tmp_row);
+        };
+
+        for (var eachLine in lawList) {
+            console.log(eachLine)
+            var tmp_well = document.createElement("div");
+            tmp_well.className = 'well';
+            var tmp_lawName = document.createElement("h4");
+            tmp_lawName.textContent = lawList[eachLine]['LawTitle'];
+            var tmp_lineNo = document.createElement("strong");
+            tmp_lineNo.textContent = lawList[eachLine]['lineNo'];
+            var tmp_line = document.createElement("p");
+            tmp_line.textContent = lawList[eachLine]['line'];
+
+            tmp_well.appendChild(tmp_lawName);
+            tmp_well.appendChild(tmp_lineNo);
+            tmp_well.appendChild(tmp_line);
+
+            document.getElementById("law_pos")
+                .appendChild(tmp_well);
+        };
+
+        $("#relaData").show()
+    };
+
+    //interact with back end
+    function search_knowledge() {
+
+        $.getJSON('/case_graph_search', {
+            caseDes: $("#search").val(),
+
+        }, function (json) {
+
+            dynamicBuild(json)
+
+            option.series[0].data = json.graphData.data;
+
+            option.series[0].links = json.graphData.links;
+
+            option2.series[0].data = json.graphData.nodeAnalyse;
+
+            option2.series[1].data = json.graphData.linkAnalyse;
+
+            option2.series[2].data = json.graphData.totalStat.reverse();
+
+            $("#caseGraphRow").show()
+
+            var myChart = echarts.init(document.getElementById("graph"));
+
+            //show the loading process
+            //myChart.showLoading();
+            var myChart2 = echarts.init(document.getElementById("stat"));
+
+            myChart.setOption(option, true);
+
+            myChart2.setOption(option2, true);
+
+        });
+    }
+
+    var yAxisData = ['符合条件的案例', '匹配案例的节点数', '匹配案例的关系数', '短文本节点', '长文本节点', '描述性节点', '本案例中完全匹配的三元组'];
+    var option2 = {
+        backgroundColor: '#0f375f',
+        title: [
+            { text: "节点分析", x: '2%', y: '1%', textStyle: { color: "#fff", fontSize: "14" } },
+            { text: "图谱数据统计", x: '40%', y: '1%', textStyle: { color: "#fff", fontSize: "14" } },
+            { text: "关系分析", x: '2%', y: '50%', textStyle: { color: "#fff", fontSize: "14" } },
+        ],
+        grid: [
+            { x: '50%', y: '7%', width: '45%', height: '90%' },
+        ],
+        tooltip: {
+            formatter: '{b} ({c})'
+        },
+        xAxis: [
+            { gridIndex: 0, axisTick: { show: false }, axisLabel: { show: false }, splitLine: { show: false }, axisLine: { show: false } },
+        ],
+        yAxis: [
+            {
+                gridIndex: 0, interval: 0, data: yAxisData.reverse(),
+                axisTick: { show: false }, axisLabel: { show: true }, splitLine: { show: false },
+                axisLine: { show: true, lineStyle: { color: "#6173a3" } },
+            }
+        ],
+        series: [
+            {
+                name: '节点分析',
+                type: 'pie',
+                radius: '30%',
+                center: ['22%', '25%'],
+                color: ['#86c9f4', '#4da8ec', '#3a91d2', '#005fa6', '#315f97'],
+
+                labelLine: { normal: { show: false } },
+                itemStyle: { normal: { label: { show: true, formatter: '{b} \n ({d}%)', textStyle: { color: '#B1B9D3' } } }, },
+            },
+            {
+                name: '关系分析',
+                type: 'pie',
+                radius: '30%',
+                center: ['22%', '75%'],
+                color: ['#86c9f4', '#4da8ec', '#3a91d2', '#005fa6', '#315f97'],
+                labelLine: { normal: { show: false } },
+
+
+                itemStyle: { normal: { label: { show: true, formatter: '{b} \n ({d}%)', textStyle: { color: '#B1B9D3' } } }, },
+            },
+            {
+                name: '图谱数据统计',
+                type: 'bar', xAxisIndex: 0, yAxisIndex: 0, barWidth: '45%',
+                itemStyle: { normal: { color: '#86c9f4' } },
+                label: { normal: { show: true, position: "right", textStyle: { color: "#9EA7C4" } } },
+            },
+
+        ]
+    };
+
+
+</script>
+
+
+
+{% endblock %}

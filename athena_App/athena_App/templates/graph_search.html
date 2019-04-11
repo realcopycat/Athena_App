@@ -1,0 +1,400 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<script src="/static/scripts/pace.min.js"></script>
+
+<script src="/static/scripts/nifty.min.js"></script>
+<script src="/static/scripts/icons.js"></script>
+
+<script src="/static/scripts/echarts.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/content/design_forGraphSearch.css" />
+
+<div class="page-header">
+    <h1>
+
+    </h1>
+</div>
+
+
+<div class="jumbotron">
+    
+    <center>
+        <div class="page-header">
+            <h1>Knowledge Search</h1>
+        </div>
+        <form class="form-inline">
+            <div class="input-group">
+                <input type="text" id="search" class="form-control input-lg" placeholder="请输入你要想要知道的知识...">
+
+            </div>
+
+        </form>
+        <button class="btn btn-default" onclick="search_knowledge()">搜索</button>
+    </center>
+    
+</div>
+
+
+
+<div class="row" id="graphRow">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>知识图谱查询结果</h3>
+        </div>
+        <div class="panel-body">
+            <div class="well">
+                <div style="height:500px;width:auto" id="graph">
+
+                </div>
+            </div>
+            <div class="well">
+                <div style="height:700px;width:auto" id="tree">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" id="specificInfo">
+    <div class="class-header">
+        <div class="center-block">
+            <h3>
+                相关知识
+            </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" id="title1">
+                            Collapsible Group Item #1
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body" id="content1">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" id="title2">
+                            Collapsible Group Item #2
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body" id="content2">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" id="title3">
+                            Collapsible Group Item #3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body" id="content3">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFour">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour" id="title4">
+                            Collapsible Group Item #4
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body" id="content4">
+
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingFive">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive" id="title5">
+                            Collapsible Group Item #3
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body" id="content5">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $("#specificInfo").hide();
+    $("#graphRow").hide();
+    //$(document).keypress(function (e) {
+    //    // press 'enter' ,then execute the function
+    //    if (e.which == 13) {
+    //        search();
+    //    }
+    //});
+
+    window.onresize = function () {
+        //resize the graph area
+        myChart.resize();
+    }
+
+    //lock the web browser
+    $.ajaxSetup({ async: false });
+
+    $("#graph").height('500px')
+    $("#graph").width('100%')
+
+    //show the loading process
+    //myChart.showLoading();
+    //myChart.hideLoading();
+
+    option = {
+        // backgroundColor: "white",
+        title: {
+            text: '搜索结果',
+            show: false,
+            textStyle: {
+                color: "black",
+                fontWeight: "lighter",
+            }
+        },
+        tooltip: {},
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
+        legend: {
+            x: "center",
+            show: true,
+            backgroundColor: "#E0E0E0",
+            borderColor: "#707070",
+            data: ['center', 'end']
+        },
+        //set legend ,disable
+        series: [
+            {
+                type: 'graph',
+                layout: 'force',
+                symbolSize: 60,
+                edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: [4, 4],
+                hoverAnimation: true,
+
+                edgeLabel: {
+                    normal: {
+                        show: true,
+                        color: "#660000",
+                        fontSize: 12,
+                    },
+                    emphasis: {
+                        show: true,
+                        color: "#FFCC00",
+                        fontsize: 20,
+                    },
+                    formatter: "{c}"
+                },
+                force: {
+                    repulsion: 500,
+                    edgeLength: [200, 400]
+                },
+                focusNodeAdjacency: true,
+                draggable: true,
+                roam: true,
+                categories: [{
+                    name: 'center',
+                    itemStyle: {
+                        normal: {
+                            color: "#FF9966",
+                        },
+                        emphasis: {
+                            color: "#009933",
+
+                        }
+
+                    }
+                },
+                {
+                    name: 'end',
+                    itemStyle: {
+                        normal: {
+                            color: "#99CCFF",
+                        },
+                        emphasis: {
+                            color: "#0099CC",
+                        }
+                    }
+                }
+
+                ],
+                //set node's categories ,disable
+                label: {
+                    normal: {
+                        show: true,
+                        color: "#000000",
+                        fontSize: 10
+                    }
+
+                },
+                lineStyle: {
+                    normal: {
+                        color: "#CC9966",
+                        opacity: 1,
+                        width: 2,
+                        curveness: 0.0
+                    },
+                    emphasis: {
+                        color: "#666633",
+                        opacity: 1,
+                        width: 5,
+                        curveness: 0.4
+                    }
+
+                },
+                // progressiveThreshold: 700,
+                nodes: [],
+                links: [],
+            }
+        ]
+    };
+
+    option_tree = {
+        tooltip: {
+            trigger: 'item',
+            triggerOn: 'mousemove'
+        },
+        series: [
+            {
+                type: 'tree',
+
+                data: {} ,
+
+                top: '18%',
+                bottom: '14%',
+
+                //layout: 'radial',
+
+                symbol: 'emptyCircle',
+
+                symbolSize: 7,
+
+                initialTreeDepth: 3,
+
+                animationDurationUpdate: 750,
+                label: {
+                    normal: {
+                        position: 'left',
+                        verticalAlign: 'middle',
+                        align: 'right',
+                        fontSize: 9
+                    }
+                },
+
+                leaves: {
+                    label: {
+                        normal: {
+                            position: 'right',
+                            verticalAlign: 'middle',
+                            align: 'left'
+                        }
+                    }
+                },
+            }
+        ]
+    };
+
+    //interact with back end
+    function search_knowledge() {
+
+        $.getJSON('/knowledge_search', {
+            description: $("#search").val(),
+
+        }, function (json) {
+            dynamicInfoCreate(json);
+            console.log(json);
+            option.series[0].nodes = json.data;
+
+            option.series[0].links = json.links;
+            
+            option_tree.series[0].data = [json.treeData];
+            $("#graphRow").show();
+
+            var myChart = echarts.init(document.getElementById("graph"));
+            var myTree = echarts.init(document.getElementById("tree"));
+            myChart.setOption(option, true);
+            myTree.setOption(option_tree, true);
+           
+            
+
+            
+        });
+    }
+
+    function dynamicInfoCreate(jsonData) {
+        $("#specificInfo").show()
+        var data = jsonData.specificData;
+        console.log(data)
+        var count = 0;
+        data.forEach(function (x) {
+            
+            count = count + 1;
+            console.log(count);
+            //if (count == 6) {
+            //    return false;
+            //}
+            var tmp_id = 'title' + count;
+            document.getElementById(tmp_id).innerHTML = x.key;
+
+            var store_text = document.createElement("div")
+            for (var i in x.info) {
+                var tmp_para_list = x.info[i];
+                //console.log(tmp_para_list)
+                for (var para_index in tmp_para_list) {
+                    var p_para_tmp = document.createElement("p");
+                    p_para_tmp.textContent = tmp_para_list[para_index];
+
+                    store_text.appendChild(p_para_tmp)
+                };
+            };
+            console.log(store_text)
+            var tmp_id2 = 'content' + count;
+            document.getElementById(tmp_id2).appendChild(store_text)
+
+            
+
+        });
+
+        
+    };
+
+
+
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+
+{% endblock %}
+
+

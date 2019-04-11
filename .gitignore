@@ -259,5 +259,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/athena_App/env
+/athena_App/env/Lib/site-packages
+/athena_App/env/Scripts
 /athena_App/env1
