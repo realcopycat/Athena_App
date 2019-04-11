@@ -24,7 +24,7 @@ class caseQuery():
 
         #达到一定的分数就属于“核心相关关系”
         #“coreRela”
-        self.rela_score=0.4
+        self.rela_score=0.25
         #达到标准分数就不再检索，直接返回答案，加快速度
         self.score_standard=0.8
 
@@ -266,8 +266,14 @@ class caseQuery():
             textDataDict["审理法院"]=singleDoc['judgement']['court']
         except:
             pass
-        textDataDict['案例标题']=singleDoc['judgement']['title']
-        textDataDict['案例编号']=singleDoc['judgement']['caseNo']
+        try:
+            textDataDict['案例标题']=singleDoc['judgement']['title']
+        except:
+            pass
+        try:
+            textDataDict['案例编号']=singleDoc['judgement']['caseNo']
+        except:
+            pass
         #以下cause作为成员供法条查询使用
         try:
             self.cause=singleDoc['judgement']['cause'][0]
@@ -277,7 +283,6 @@ class caseQuery():
 
         try:
             defedantParse_tmp=singleDoc['judgement']['litigants']
-            textDataDict['被告人']=[]
             for each in defedantParse_tmp:
                 if each['type']=='Defedant':
                     textDataDict['被告人'].append(each['name'])

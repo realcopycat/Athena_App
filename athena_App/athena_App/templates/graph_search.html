@@ -290,7 +290,7 @@
                 top: '18%',
                 bottom: '14%',
 
-                layout: 'orthogonal',
+                //layout: 'radial',
 
                 symbol: 'emptyCircle',
 
@@ -351,11 +351,15 @@
     function dynamicInfoCreate(jsonData) {
         $("#specificInfo").show()
         var data = jsonData.specificData;
-
+        console.log(data)
         var count = 0;
         data.forEach(function (x) {
             
-            count = count + 1; console.log(count);
+            count = count + 1;
+            console.log(count);
+            //if (count == 6) {
+            //    return false;
+            //}
             var tmp_id = 'title' + count;
             document.getElementById(tmp_id).innerHTML = x.key;
 

@@ -5,7 +5,7 @@ from athena_App.layer_dataOperating.es_search import searchInEs
 from athena_App.layer_dataOperating.ltp_module import ltpTools
 from athena_App.layer_dataOperating.mongo_search import mongoSearch
 from athena_App.layer_dataOperating.sy_module import senCompare
-
+import re
 import operator
 #本包可以根据字典值在列表中对字典排序
 
@@ -16,7 +16,7 @@ class knowledgeSearch():
         self.index="baike_data_abstract"
         self.type="knowledge"
         self.key="abstract"
-        self.num=20
+        self.num=10
 
         self.graphQuery=neo4jQuery()
 
@@ -127,7 +127,7 @@ class knowledgeSearch():
             except Exception as e:
                 print(e)
 
-        sorted_relainfo=sorted(relaInfo_forDes,key=operator.itemgetter('score'))
+        sorted_relainfo=sorted(relaInfo_forDes,key=operator.itemgetter('score'))[0:5:1]
 
        
         return sorted_relainfo,coreWord
@@ -145,7 +145,7 @@ class knowledgeSearch():
         totalData["links"]=drawingData["links"]
         #最后那个框是一个切片操作,coreWord用于树图分析
         #存在参数依赖关系，故调用顺序切勿变换
-        totalData["specificData"],coreWord=self.getSpecifyData(titleList,des)[0:5:1]
+        totalData["specificData"],coreWord=self.getSpecifyData(titleList,des)
         print(totalData["specificData"])
         #获取树图数据
         totalData["treeData"]=self.getTreeData(titleList,coreWord)
@@ -212,8 +212,9 @@ class knowledgeSearch():
                     tmpBasicUnit['name']=eachUnitKey
                     tmpBasicUnit['children']=[]
                     for eachPara in tmpRawDictOF_relative_info[rela_info_key][eachUnitKey]:
+                        processedPara=re.sub('(。)|(，)','\n',eachPara)
                         tmpPara=dict()
-                        tmpPara['name']=eachPara
+                        tmpPara['name']=processedPara
                         tmpPara['label']={'normal':{'show':False},'emphasis':{'show':True}}
                         tmpBasicUnit['children'].append(tmpPara)
                     tmpInfoUnit['children'].append(tmpBasicUnit)
