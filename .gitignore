@@ -262,3 +262,5 @@ __pycache__/
 /athena_App/env/Lib/site-packages
 /athena_App/env/Scripts
 /athena_App/env1
+/athena_App/env/Lib/tcl8.6
+/athena_App/env
