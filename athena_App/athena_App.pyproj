@@ -152,6 +152,7 @@
     <Folder Include="athena_App\Baidu_api\" />
     <Folder Include="athena_App\layer_dataOperating\" />
     <Folder Include="athena_App\layer_frontInteracting\" />
+    <Folder Include="athena_App\THINKING\" />
     <Folder Include="athena_App\openlaw\" />
     <Folder Include="athena_App\static\" />
     <Folder Include="athena_App\static\content\" />
@@ -1851,10 +1852,13 @@
     <Content Include="athena_App\templates\graph_search.html" />
     <Content Include="athena_App\templates\knife.html" />
     <Content Include="athena_App\templates\newMain.html" />
+    <Content Include="athena_App\THINKING\GOAL.md">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="athena_App\todo_list.md">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="README.MD">
+    <Content Include="README.md">
       <Publish>True</Publish>
     </Content>
     <Content Include="athena_App\templates\answer.html" />
