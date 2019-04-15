@@ -1855,6 +1855,9 @@
     <Content Include="athena_App\THINKING\GOAL.md">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="athena_App\THINKING\procedureGraph.md">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="athena_App\todo_list.md">
       <SubType>Code</SubType>
     </Content>
