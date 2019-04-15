@@ -37,6 +37,9 @@
     <Compile Include="athena_App\data_process\es_databaseBuild.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\data_process\procedureImport.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\layer_dataOperating\csv2mongo.py" />
     <Compile Include="athena_App\layer_dataOperating\csv2mongo_qa.py" />
     <Compile Include="athena_App\layer_dataOperating\es_mapping.py">
@@ -1858,6 +1861,7 @@
     <Content Include="athena_App\THINKING\procedureGraph.md">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="athena_App\THINKING\Example.txt" />
     <Content Include="athena_App\todo_list.md">
       <SubType>Code</SubType>
     </Content>
