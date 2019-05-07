@@ -40,6 +40,9 @@
     <Compile Include="athena_App\data_process\procedureImport.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="athena_App\procedure\Procedure_Csv2mongo.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="athena_App\layer_dataOperating\csv2mongo.py" />
     <Compile Include="athena_App\layer_dataOperating\csv2mongo_qa.py" />
     <Compile Include="athena_App\layer_dataOperating\es_mapping.py">
@@ -155,6 +158,7 @@
     <Folder Include="athena_App\Baidu_api\" />
     <Folder Include="athena_App\layer_dataOperating\" />
     <Folder Include="athena_App\layer_frontInteracting\" />
+    <Folder Include="athena_App\procedure\" />
     <Folder Include="athena_App\THINKING\" />
     <Folder Include="athena_App\openlaw\" />
     <Folder Include="athena_App\static\" />
@@ -198,6 +202,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="athena_App\openlaw\README.md">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="athena_App\procedure\backup.md">
       <SubType>Code</SubType>
     </Content>
     <Content Include="athena_App\README.md">
